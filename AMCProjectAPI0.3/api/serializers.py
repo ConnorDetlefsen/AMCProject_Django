@@ -1,6 +1,5 @@
 from rest_framework import serializers
-from .models import CorrectAnswer, CorrectAnswer2, AnswerList, AnswerList2, Question
-
+from .models import CorrectAnswer, CorrectAnswer2, AnswerList, AnswerList2, Question, QuizResults, User
 
 class CorrectAnswerSerializer(serializers.ModelSerializer):
     class Meta:
@@ -36,4 +35,20 @@ class QuestionSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Question
-        fields = ('id', 'question', 'question2', 'answerList', 'answerList2')
+        fields = ('id', 'questionType', 'question', 'question2', 'answerList', 'answerList2')
+
+
+
+class QuizResultsSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = QuizResults
+        fields = ('id', 'question1', 'question2', 'question3')
+
+
+class UserSerializer(serializers.ModelSerializer):
+    quizResults = QuizResultsSerializer(many=False)
+
+    class Meta:
+        model = User
+        fields = ('id', 'username', 'password', 'quizResults')
