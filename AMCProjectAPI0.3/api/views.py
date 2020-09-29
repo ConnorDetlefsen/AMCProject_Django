@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from rest_framework import viewsets
-from .models import CorrectAnswer, CorrectAnswer2, AnswerList, AnswerList2, Question, QuizResults, User
-from .serializers import CorrectAnswerSerializer,CorrectAnswer2Serializer, AnswerListSerializer,AnswerList2Serializer, QuestionSerializer, QuizResultsSerializer, UserSerializer
+from .models import CorrectAnswer, CorrectAnswer2, AnswerList, AnswerList2, Question, QuizResults, User, LoginTracking, QuestionTracking
+from .serializers import CorrectAnswerSerializer,CorrectAnswer2Serializer, AnswerListSerializer,AnswerList2Serializer, QuestionSerializer, QuizResultsSerializer, UserSerializer, LoginTrackingSerializer, QuestionTrackingSerializer
 
 
 # Create your views here.
@@ -36,3 +36,13 @@ class QuizResultsViewSet(viewsets.ModelViewSet):
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
+
+
+class LoginTrackingViewSet(viewsets.ModelViewSet):
+    queryset = LoginTracking.objects.all()
+    serializer_class = LoginTrackingSerializer
+
+
+class QuestionTrackingViewSet(viewsets.ModelViewSet):
+    queryset = QuestionTracking.objects.all()
+    serializer_class = QuestionTrackingSerializer

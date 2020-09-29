@@ -34,19 +34,35 @@ class Question(models.Model):
     )
     questionType = models.CharField(max_length=364, null=False, blank=False, default='', choices=QUESTIONTYPE)
     question = models.TextField(max_length=364, null=False)
-    question2 = models.TextField(max_length=364, null=True)
+    question2 = models.TextField(max_length=364, null=True, blank = True)
     answerList = models.OneToOneField(AnswerList, blank=True, null=True, on_delete=models.CASCADE)
     answerList2 = models.OneToOneField(AnswerList2, blank=True, null=True, on_delete=models.CASCADE)
 
 
 class QuizResults(models.Model):
-    question1 = models.BooleanField(default = False)
-    question2 = models.BooleanField(default = False)
-    question3 = models.BooleanField(default = False)
-
+    question1 = models.BooleanField(blank=True, null = True)
+    question2 = models.BooleanField(blank=True, null = True)
+    question3 = models.BooleanField(blank=True, null = True)
+    question4 = models.BooleanField(blank=True, null = True)
 
 
 class User(models.Model):
     username = models.CharField(max_length=364)
     password = models.CharField(max_length=356)
+    currentQuestion = models.IntegerField(default=1)
     quizResults = models.OneToOneField(QuizResults, blank=True, null=True, on_delete=models.CASCADE)
+
+
+class LoginTracking(models.Model):
+    login_id = models.AutoField(primary_key=True)
+    user_id = models.ForeignKey('User', on_delete=models.CASCADE, db_column='user_id')
+    stamp = models.DateTimeField(auto_now_add=True)
+
+
+class QuestionTracking(models.Model):
+    id= models.AutoField(primary_key=True)
+    user_id = models.ForeignKey('User', on_delete=models.CASCADE, db_column='user_id')
+    stamp = models.DateTimeField(auto_now_add=True)
+    question = models.CharField(max_length=364)
+    answer = models.CharField(max_length=364)
+    correct = models.BooleanField(blank=True, null = True)
